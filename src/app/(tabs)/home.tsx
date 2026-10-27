@@ -1,3 +1,10 @@
+import CartaoProdutoGNV from "@/components/CartaoProdutoGNV";
+import { coresGNV } from "@/constants/temaGNV";
+import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
+import { buscarProdutosGNV, categoriasGNV } from "@/data/servidorGNV";
+import { ProdutoGNV } from "@/models/ProdutoGNV";
+import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -10,13 +17,6 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
-import { coresGNV } from "@/constants/temaGNV";
-import { ProdutoGNV } from "@/models/ProdutoGNV";
-import { buscarProdutosGNV, categoriasGNV } from "@/data/servidorGNV";
-import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
-import CartaoProdutoGNV from "@/components/CartaoProdutoGNV";
 
 type OrdemGNV = "padrao" | "menor" | "maior";
 
@@ -86,36 +86,6 @@ export default function TelaHomeGNV() {
       (a, b) => b.precoGNV - a.precoGNV,
     );
   }
-
-   const textoOrdemGNV =
-     ordemGNV === "padrao"
-       ? "Padrão"
-       : ordemGNV === "menor"
-         ? "Menor preço"
-         : "Maior preço";
-
-   const mostrarBannerGNV =
-     categoriaAtivaGNV === "Todos" && buscaGNV.trim() === "";
-
-   const cabecalhoGNV = (
-     <View>
-       {mostrarBannerGNV && (
-         <View style={estilosGNV.bannerGNV}>
-           <View style={estilosGNV.blocoBannerGNV}>
-             <Text style={estilosGNV.etiquetaBannerGNV}>NOVA COLEÇÃO</Text>
-             <Text style={estilosGNV.tituloBannerGNV}>Chrome Era</Text>
-             <Text style={estilosGNV.textoBannerGNV}>
-               Até 30% off em peças selecionadas
-             </Text>
-           </View>
-           <Feather name="zap" size={44} color={coresGNV.primariaGNV} />
-         </View>
-       )}
-       <Text style={estilosGNV.textoOrdemGNV}>
-         Ordenar por: {textoOrdemGNV}
-       </Text>
-     </View>
-   );
 
   return (
     <View style={estilosGNV.containerGNV}>
@@ -189,7 +159,6 @@ export default function TelaHomeGNV() {
           numColumns={colunasGNV}
           contentContainerStyle={estilosGNV.conteudoListaGNV}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={cabecalhoGNV}
           ListEmptyComponent={
             <Text style={estilosGNV.vazioGNV}>Nenhum produto encontrado.</Text>
           }
@@ -311,44 +280,6 @@ const estilosGNV = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 16,
     paddingBottom: 24,
-  },
-  bannerGNV: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: coresGNV.superficieGNV,
-    borderWidth: 1,
-    borderColor: coresGNV.destaqueGNV,
-    borderRadius: 20,
-    padding: 18,
-    marginHorizontal: 6,
-    marginBottom: 14,
-  },
-  blocoBannerGNV: {
-    flex: 1,
-  },
-  etiquetaBannerGNV: {
-    color: coresGNV.destaqueGNV,
-    fontSize: 12,
-    fontWeight: "bold",
-    letterSpacing: 1,
-  },
-  tituloBannerGNV: {
-    color: coresGNV.textoGNV,
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 4,
-  },
-  textoBannerGNV: {
-    color: coresGNV.textoSuaveGNV,
-    fontSize: 13,
-    marginTop: 4,
-  },
-  textoOrdemGNV: {
-    color: coresGNV.textoSuaveGNV,
-    fontSize: 13,
-    marginBottom: 6,
-    marginLeft: 6,
   },
   vazioGNV: {
     color: coresGNV.textoSuaveGNV,
