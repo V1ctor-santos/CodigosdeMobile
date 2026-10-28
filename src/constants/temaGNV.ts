@@ -8,4 +8,10 @@ export const coresGNV = {
   textoGNV: "#F5F5FF",
   textoSuaveGNV: "#8A8AA8",
   erroGNV: "#FF4D6D",
+  brancoGNV: "#FFFFFF",
+  textoEscuroGNV: "#14142B",
+  textoSuaveEscuroGNV: "#6B6B85",
+  bordaClaraGNV: "#E4E4EE",
+  fundoChipClaroGNV: "#F0F1F7",
+  primariaEscuraGNV: "#0090A8",
 };

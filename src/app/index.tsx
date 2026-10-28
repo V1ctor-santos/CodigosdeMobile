@@ -38,7 +38,7 @@ export default function TelaAberturaGNV() {
           style={estilosGNV.botaoGNV}
           onPress={() => routerGNV.push("/login")}
         >
-          <Text style={estilosGNV.textoBotaoGNV}>Get Started</Text>
+          <Text style={estilosGNV.textoBotaoGNV}>Vamos Começar</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -52,7 +52,7 @@ const estilosGNV = StyleSheet.create({
     justifyContent: "flex-end",
   },
   peliculaGNV: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: "rgba(10,10,20,0.55)",
   },
   conteudoGNV: {

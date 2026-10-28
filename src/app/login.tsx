@@ -1,3 +1,7 @@
+import { fotoLoginGNV } from "@/constants/imagensGNV";
+import { coresGNV } from "@/constants/temaGNV";
+import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
   ImageBackground,
@@ -8,10 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
-import { coresGNV } from "@/constants/temaGNV";
-import { fotoLoginGNV } from "@/constants/imagensGNV";
 
 const emailCadastradoGNV = "cliente@loja.com";
 const senhaCadastradaGNV = "123456";
@@ -120,7 +120,7 @@ const estilosGNV = StyleSheet.create({
     paddingTop: 56,
   },
   peliculaGNV: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: "rgba(10,10,20,0.35)",
   },
   marcaGNV: {

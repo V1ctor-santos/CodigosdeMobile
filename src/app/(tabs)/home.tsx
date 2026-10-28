@@ -1,3 +1,4 @@
+import AvatarGNV from "@/components/AvatarGNV";
 import CartaoProdutoGNV from "@/components/CartaoProdutoGNV";
 import { coresGNV } from "@/constants/temaGNV";
 import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
@@ -18,7 +19,19 @@ import {
   View,
 } from "react-native";
 
-type OrdemGNV = "padrao" | "menor" | "maior";
+type OrdemGNV = "padrao" | "popular" | "menor" | "maior";
+
+interface OpcaoOrdemGNV {
+  valorGNV: OrdemGNV;
+  textoGNV: string;
+  iconeGNV: keyof typeof Feather.glyphMap;
+}
+
+const opcoesOrdemGNV: OpcaoOrdemGNV[] = [
+  { valorGNV: "popular", textoGNV: "Popularidade", iconeGNV: "trending-up" },
+  { valorGNV: "menor", textoGNV: "Menor preço", iconeGNV: "arrow-down" },
+  { valorGNV: "maior", textoGNV: "Maior preço", iconeGNV: "arrow-up" },
+];
 
 export default function TelaHomeGNV() {
   const routerGNV = useRouter();
@@ -30,6 +43,7 @@ export default function TelaHomeGNV() {
   const [categoriaAtivaGNV, setCategoriaAtivaGNV] = useState("Todos");
   const [buscaGNV, setBuscaGNV] = useState("");
   const [ordemGNV, setOrdemGNV] = useState<OrdemGNV>("padrao");
+  const [menuAbertoGNV, setMenuAbertoGNV] = useState(false);
 
   let colunasGNV = 2;
   if (larguraTelaGNV >= 1300) {
@@ -49,14 +63,9 @@ export default function TelaHomeGNV() {
     carregarProdutosGNV();
   }, []);
 
-  function alternarOrdemGNV() {
-    if (ordemGNV === "padrao") {
-      setOrdemGNV("menor");
-    } else if (ordemGNV === "menor") {
-      setOrdemGNV("maior");
-    } else {
-      setOrdemGNV("padrao");
-    }
+  function escolherOrdemGNV(valorGNV: OrdemGNV) {
+    setOrdemGNV(valorGNV === ordemGNV ? "padrao" : valorGNV);
+    setMenuAbertoGNV(false);
   }
 
   function adicionarRapidoGNV(produtoGNV: ProdutoGNV) {
@@ -85,35 +94,89 @@ export default function TelaHomeGNV() {
     produtosFiltradosGNV = [...produtosFiltradosGNV].sort(
       (a, b) => b.precoGNV - a.precoGNV,
     );
+  } else if (ordemGNV === "popular") {
+    produtosFiltradosGNV = [...produtosFiltradosGNV].sort(
+      (a, b) => b.totalAvaliacoesGNV - a.totalAvaliacoesGNV,
+    );
   }
 
   return (
     <View style={estilosGNV.containerGNV}>
-      <View style={estilosGNV.topoGNV}>
-        <Text style={estilosGNV.rotuloLocalGNV}>Entregar em</Text>
-        <View style={estilosGNV.linhaLocalGNV}>
-          <Feather name="map-pin" size={16} color={coresGNV.primariaGNV} />
-          <Text style={estilosGNV.localGNV}>Manaus, AM</Text>
+      <View style={estilosGNV.areaUmGNV}>
+        <View style={estilosGNV.linhaTopoGNV}>
+          <View>
+            <Text style={estilosGNV.rotuloLocalGNV}>Entregar em</Text>
+            <View style={estilosGNV.linhaLocalGNV}>
+              <Feather name="map-pin" size={16} color={coresGNV.primariaGNV} />
+              <Text style={estilosGNV.localGNV}>Manaus, AM</Text>
+            </View>
+          </View>
+          <TouchableOpacity onPress={() => routerGNV.push("/perfil")}>
+            <AvatarGNV tamanhoGNV={46} />
+          </TouchableOpacity>
         </View>
         <Text style={estilosGNV.tituloGNV}>Encontre seu look futurista</Text>
+      </View>
 
-        <View style={estilosGNV.linhaBuscaGNV}>
-          <View style={estilosGNV.campoBuscaGNV}>
-            <Feather name="search" size={18} color={coresGNV.textoSuaveGNV} />
-            <TextInput
-              style={estilosGNV.entradaBuscaGNV}
-              placeholder="Buscar produtos"
-              placeholderTextColor={coresGNV.textoSuaveGNV}
-              value={buscaGNV}
-              onChangeText={setBuscaGNV}
-            />
+      <View style={estilosGNV.areaDoisGNV}>
+        <View style={estilosGNV.envolveBuscaGNV}>
+          <View style={estilosGNV.colunaBuscaGNV}>
+            <View style={estilosGNV.linhaBuscaGNV}>
+              <View style={estilosGNV.campoBuscaGNV}>
+                <Feather
+                  name="search"
+                  size={18}
+                  color={coresGNV.textoSuaveEscuroGNV}
+                />
+                <TextInput
+                  style={estilosGNV.entradaBuscaGNV}
+                  placeholder="Buscar produtos"
+                  placeholderTextColor={coresGNV.textoSuaveEscuroGNV}
+                  value={buscaGNV}
+                  onChangeText={setBuscaGNV}
+                />
+              </View>
+              <TouchableOpacity
+                style={estilosGNV.botaoFiltroGNV}
+                onPress={() => setMenuAbertoGNV(!menuAbertoGNV)}
+              >
+                <Feather name="sliders" size={20} color={coresGNV.fundoGNV} />
+              </TouchableOpacity>
+            </View>
+
+            {menuAbertoGNV && (
+              <View style={estilosGNV.menuOrdemGNV}>
+                {opcoesOrdemGNV.map((opcaoGNV) => {
+                  const ativaGNV = opcaoGNV.valorGNV === ordemGNV;
+                  return (
+                    <TouchableOpacity
+                      key={opcaoGNV.valorGNV}
+                      style={estilosGNV.itemMenuGNV}
+                      onPress={() => escolherOrdemGNV(opcaoGNV.valorGNV)}
+                    >
+                      <Feather
+                        name={opcaoGNV.iconeGNV}
+                        size={18}
+                        color={
+                          ativaGNV
+                            ? coresGNV.primariaEscuraGNV
+                            : coresGNV.textoSuaveEscuroGNV
+                        }
+                      />
+                      <Text
+                        style={[
+                          estilosGNV.textoItemMenuGNV,
+                          ativaGNV && estilosGNV.textoItemMenuAtivoGNV,
+                        ]}
+                      >
+                        {opcaoGNV.textoGNV}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            )}
           </View>
-          <TouchableOpacity
-            style={estilosGNV.botaoFiltroGNV}
-            onPress={alternarOrdemGNV}
-          >
-            <Feather name="sliders" size={20} color={coresGNV.fundoGNV} />
-          </TouchableOpacity>
         </View>
 
         <ScrollView
@@ -145,34 +208,41 @@ export default function TelaHomeGNV() {
             );
           })}
         </ScrollView>
-      </View>
 
-      {carregandoGNV ? (
-        <View style={estilosGNV.centroGNV}>
-          <ActivityIndicator size="large" color={coresGNV.primariaGNV} />
-        </View>
-      ) : (
-        <FlatList
-          key={colunasGNV}
-          data={produtosFiltradosGNV}
-          keyExtractor={(produtoGNV) => produtoGNV.idGNV}
-          numColumns={colunasGNV}
-          contentContainerStyle={estilosGNV.conteudoListaGNV}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
-            <Text style={estilosGNV.vazioGNV}>Nenhum produto encontrado.</Text>
-          }
-          renderItem={({ item }) => (
-            <View style={{ width: `${100 / colunasGNV}%`, padding: 6 }}>
-              <CartaoProdutoGNV
-                produtoGNV={item}
-                aoPressionarGNV={() => routerGNV.push(`/produto/${item.idGNV}`)}
-                aoAdicionarGNV={() => adicionarRapidoGNV(item)}
-              />
-            </View>
-          )}
-        />
-      )}
+        {carregandoGNV ? (
+          <View style={estilosGNV.centroGNV}>
+            <ActivityIndicator
+              size="large"
+              color={coresGNV.primariaEscuraGNV}
+            />
+          </View>
+        ) : (
+          <FlatList
+            key={colunasGNV}
+            data={produtosFiltradosGNV}
+            keyExtractor={(produtoGNV) => produtoGNV.idGNV}
+            numColumns={colunasGNV}
+            contentContainerStyle={estilosGNV.conteudoListaGNV}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <Text style={estilosGNV.vazioGNV}>
+                Nenhum produto encontrado.
+              </Text>
+            }
+            renderItem={({ item }) => (
+              <View style={{ width: `${100 / colunasGNV}%`, padding: 6 }}>
+                <CartaoProdutoGNV
+                  produtoGNV={item}
+                  aoPressionarGNV={() =>
+                    routerGNV.push(`/produto/${item.idGNV}`)
+                  }
+                  aoAdicionarGNV={() => adicionarRapidoGNV(item)}
+                />
+              </View>
+            )}
+          />
+        )}
+      </View>
     </View>
   );
 }
@@ -182,9 +252,16 @@ const estilosGNV = StyleSheet.create({
     flex: 1,
     backgroundColor: coresGNV.fundoGNV,
   },
-  topoGNV: {
-    paddingTop: 56,
+  areaUmGNV: {
+    backgroundColor: coresGNV.fundoGNV,
+    paddingTop: 52,
     paddingHorizontal: 16,
+    paddingBottom: 48,
+  },
+  linhaTopoGNV: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   rotuloLocalGNV: {
     color: coresGNV.textoSuaveGNV,
@@ -205,8 +282,26 @@ const estilosGNV = StyleSheet.create({
     color: coresGNV.textoGNV,
     fontSize: 26,
     fontWeight: "bold",
-    marginTop: 14,
-    marginBottom: 14,
+    marginTop: 16,
+  },
+  areaDoisGNV: {
+    flex: 1,
+    backgroundColor: coresGNV.brancoGNV,
+    paddingTop: 44,
+  },
+  envolveBuscaGNV: {
+    position: "absolute",
+    top: -28,
+    left: 0,
+    right: 0,
+    alignItems: "center",
+    paddingHorizontal: 16,
+    zIndex: 20,
+    elevation: 20,
+  },
+  colunaBuscaGNV: {
+    width: "100%",
+    maxWidth: 720,
   },
   linhaBuscaGNV: {
     flexDirection: "row",
@@ -218,53 +313,85 @@ const estilosGNV = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
-    backgroundColor: coresGNV.campoGNV,
-    borderWidth: 1,
-    borderColor: coresGNV.bordaGNV,
-    borderRadius: 14,
-    paddingHorizontal: 14,
-    height: 48,
+    backgroundColor: coresGNV.brancoGNV,
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    height: 56,
+    shadowColor: "#000",
+    shadowOpacity: 0.18,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
   },
   entradaBuscaGNV: {
     flex: 1,
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 15,
   },
   botaoFiltroGNV: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
+    width: 56,
+    height: 56,
+    borderRadius: 16,
     backgroundColor: coresGNV.primariaGNV,
     alignItems: "center",
     justifyContent: "center",
+    elevation: 6,
+  },
+  menuOrdemGNV: {
+    position: "absolute",
+    top: 64,
+    right: 0,
+    width: 210,
+    backgroundColor: coresGNV.brancoGNV,
+    borderRadius: 16,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: coresGNV.bordaClaraGNV,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 12,
+  },
+  itemMenuGNV: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  textoItemMenuGNV: {
+    color: coresGNV.textoEscuroGNV,
+    fontSize: 15,
+  },
+  textoItemMenuAtivoGNV: {
+    color: coresGNV.primariaEscuraGNV,
+    fontWeight: "bold",
   },
   listaCategoriasGNV: {
     height: 44,
     flexGrow: 0,
-    marginTop: 14,
+    flexShrink: 0,
   },
   conteudoCategoriasGNV: {
     alignItems: "center",
     gap: 10,
-    paddingRight: 16,
+    paddingHorizontal: 16,
   },
   chipGNV: {
     height: 40,
     paddingHorizontal: 18,
     borderRadius: 20,
-    backgroundColor: coresGNV.superficieGNV,
-    borderWidth: 1,
-    borderColor: coresGNV.bordaGNV,
+    backgroundColor: coresGNV.fundoChipClaroGNV,
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
   },
   chipAtivoGNV: {
     backgroundColor: coresGNV.primariaGNV,
-    borderColor: coresGNV.primariaGNV,
   },
   textoChipGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 14,
   },
   textoChipAtivoGNV: {
@@ -282,7 +409,7 @@ const estilosGNV = StyleSheet.create({
     paddingBottom: 24,
   },
   vazioGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     textAlign: "center",
     marginTop: 40,
     fontSize: 15,

@@ -62,11 +62,16 @@ export default function CartaoProdutoGNV({
 const estilosGNV = StyleSheet.create({
   cartaoGNV: {
     width: "100%",
-    backgroundColor: coresGNV.superficieGNV,
+    backgroundColor: coresGNV.brancoGNV,
     borderWidth: 1,
-    borderColor: coresGNV.bordaGNV,
+    borderColor: coresGNV.bordaClaraGNV,
     borderRadius: 18,
     padding: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
   imagemGNV: {
     width: "100%",
@@ -92,13 +97,13 @@ const estilosGNV = StyleSheet.create({
     fontWeight: "bold",
   },
   nomeGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 15,
     fontWeight: "bold",
     paddingHorizontal: 2,
   },
   subtituloGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 12,
     marginTop: 2,
     paddingHorizontal: 2,
@@ -111,7 +116,7 @@ const estilosGNV = StyleSheet.create({
     paddingHorizontal: 2,
   },
   precoGNV: {
-    color: coresGNV.primariaGNV,
+    color: coresGNV.primariaEscuraGNV,
     fontSize: 16,
     fontWeight: "bold",
   },
