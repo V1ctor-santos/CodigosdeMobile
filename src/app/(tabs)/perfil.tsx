@@ -2,14 +2,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { coresGNV } from "@/constants/temaGNV";
+import { nomePerfilGNV, emailPerfilGNV } from "@/constants/avatarGNV";
 import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
-
-const nomeUsuarioGNV = "Cliente Neowear";
-const emailUsuarioGNV = "cliente@loja.com";
+import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
+import AvatarGNV from "@/components/AvatarGNV";
 
 export default function TelaPerfilGNV() {
   const routerGNV = useRouter();
   const { totalItensGNV, limparGNV } = useCarrinhoGNV();
+  const { idsFavoritosGNV } = useFavoritosGNV();
 
   function sairGNV() {
     limparGNV();
@@ -18,24 +19,34 @@ export default function TelaPerfilGNV() {
 
   return (
     <View style={estilosGNV.containerGNV}>
-      <View style={estilosGNV.avatarGNV}>
-        <Feather name="user" size={48} color={coresGNV.primariaGNV} />
+      <TouchableOpacity
+        style={estilosGNV.botaoVoltarGNV}
+        onPress={() => routerGNV.back()}
+      >
+        <Feather name="arrow-left" size={22} color={coresGNV.textoGNV} />
+      </TouchableOpacity>
+
+      <View style={estilosGNV.cabecalhoGNV}>
+        <AvatarGNV tamanhoGNV={110} />
+        <Text style={estilosGNV.nomeGNV}>{nomePerfilGNV}</Text>
+        <Text style={estilosGNV.emailGNV}>{emailPerfilGNV}</Text>
       </View>
 
-      <Text style={estilosGNV.nomeGNV}>{nomeUsuarioGNV}</Text>
-      <Text style={estilosGNV.emailGNV}>{emailUsuarioGNV}</Text>
-
-      <View style={estilosGNV.cartaoGNV}>
-        <Feather name="shopping-bag" size={20} color={coresGNV.textoSuaveGNV} />
-        <Text style={estilosGNV.textoCartaoGNV}>
-          {totalItensGNV === 1
-            ? "1 item no carrinho"
-            : `${totalItensGNV} itens no carrinho`}
-        </Text>
+      <View style={estilosGNV.linhaCartoesGNV}>
+        <View style={estilosGNV.cartaoGNV}>
+          <Feather name="shopping-bag" size={22} color={coresGNV.primariaGNV} />
+          <Text style={estilosGNV.valorGNV}>{totalItensGNV}</Text>
+          <Text style={estilosGNV.rotuloGNV}>No carrinho</Text>
+        </View>
+        <View style={estilosGNV.cartaoGNV}>
+          <Feather name="heart" size={22} color={coresGNV.destaqueGNV} />
+          <Text style={estilosGNV.valorGNV}>{idsFavoritosGNV.length}</Text>
+          <Text style={estilosGNV.rotuloGNV}>Favoritos</Text>
+        </View>
       </View>
 
       <TouchableOpacity style={estilosGNV.botaoSairGNV} onPress={sairGNV}>
-        <Feather name="log-out" size={18} color={coresGNV.erroGNV} />
+        <Feather name="log-out" size={20} color={coresGNV.erroGNV} />
         <Text style={estilosGNV.textoSairGNV}>Sair</Text>
       </TouchableOpacity>
     </View>
@@ -46,61 +57,76 @@ const estilosGNV = StyleSheet.create({
   containerGNV: {
     flex: 1,
     backgroundColor: coresGNV.fundoGNV,
-    alignItems: "center",
-    paddingTop: 80,
-    paddingHorizontal: 24,
+    paddingTop: 56,
+    paddingHorizontal: 20,
   },
-  avatarGNV: {
-    width: 104,
-    height: 104,
-    borderRadius: 52,
+  botaoVoltarGNV: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     backgroundColor: coresGNV.superficieGNV,
-    borderWidth: 2,
-    borderColor: coresGNV.primariaGNV,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 16,
+  },
+  cabecalhoGNV: {
+    alignItems: "center",
+    marginTop: 12,
+    marginBottom: 28,
   },
   nomeGNV: {
     color: coresGNV.textoGNV,
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
+    marginTop: 14,
   },
   emailGNV: {
     color: coresGNV.textoSuaveGNV,
     fontSize: 15,
     marginTop: 4,
-    marginBottom: 32,
+  },
+  linhaCartoesGNV: {
+    flexDirection: "row",
+    gap: 14,
+    width: "100%",
+    maxWidth: 600,
+    alignSelf: "center",
   },
   cartaoGNV: {
-    flexDirection: "row",
-    alignItems: "center",
-    alignSelf: "stretch",
-    gap: 12,
+    flex: 1,
     backgroundColor: coresGNV.superficieGNV,
     borderWidth: 1,
     borderColor: coresGNV.bordaGNV,
-    borderRadius: 14,
-    padding: 16,
+    borderRadius: 18,
+    padding: 18,
+    alignItems: "center",
+    gap: 6,
   },
-  textoCartaoGNV: {
+  valorGNV: {
     color: coresGNV.textoGNV,
-    fontSize: 16,
+    fontSize: 26,
+    fontWeight: "bold",
+  },
+  rotuloGNV: {
+    color: coresGNV.textoSuaveGNV,
+    fontSize: 13,
   },
   botaoSairGNV: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    marginTop: 32,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 12,
+    justifyContent: "center",
+    gap: 10,
+    marginTop: 28,
+    paddingVertical: 16,
+    borderRadius: 16,
     borderWidth: 1,
     borderColor: coresGNV.erroGNV,
+    width: "100%",
+    maxWidth: 600,
+    alignSelf: "center",
   },
   textoSairGNV: {
     color: coresGNV.erroGNV,
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "bold",
   },
 });
