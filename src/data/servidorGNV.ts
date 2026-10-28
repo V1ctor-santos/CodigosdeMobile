@@ -1,5 +1,5 @@
-import { ProdutoGNV } from "@/models/ProdutoGNV";
 import { fotoPexelsGNV } from "@/constants/imagensGNV";
+import { ProdutoGNV } from "@/models/ProdutoGNV";
 
 export const categoriasGNV = [
   "Todos",
