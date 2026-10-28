@@ -57,7 +57,11 @@ export default function TelaFavoritosGNV() {
 
       {favoritosGNV.length === 0 ? (
         <View style={estilosGNV.vazioGNV}>
-          <Feather name="heart" size={56} color={coresGNV.textoSuaveGNV} />
+          <Feather
+            name="heart"
+            size={56}
+            color={coresGNV.textoSuaveEscuroGNV}
+          />
           <Text style={estilosGNV.textoVazioGNV}>
             Você ainda não favoritou nada.
           </Text>
@@ -91,11 +95,11 @@ export default function TelaFavoritosGNV() {
 const estilosGNV = StyleSheet.create({
   containerGNV: {
     flex: 1,
-    backgroundColor: coresGNV.fundoGNV,
+    backgroundColor: coresGNV.brancoGNV,
     paddingTop: 56,
   },
   tituloGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 26,
     fontWeight: "bold",
     paddingHorizontal: 16,
@@ -113,12 +117,12 @@ const estilosGNV = StyleSheet.create({
     paddingHorizontal: 32,
   },
   textoVazioGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 18,
     fontWeight: "bold",
   },
   subtextoVazioGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 14,
     textAlign: "center",
   },
