@@ -13,6 +13,13 @@ import {
   View,
 } from "react-native";
 
+const brancoGNV = "#FFFFFF";
+const textoEscuroGNV = "#14142B";
+const textoSuaveEscuroGNV = "#6B6B85";
+const bordaClaraGNV = "#E4E4EE";
+const fundoClaroGNV = "#F0F1F7";
+const azulEscuroGNV = "#0090A8";
+
 export default function TelaCarrinhoGNV() {
   const routerGNV = useRouter();
   const {
@@ -37,7 +44,7 @@ export default function TelaCarrinhoGNV() {
   if (compraFinalizadaGNV) {
     return (
       <View style={estilosGNV.centroGNV}>
-        <Feather name="check-circle" size={72} color={coresGNV.primariaGNV} />
+        <Feather name="check-circle" size={72} color={azulEscuroGNV} />
         <Text style={estilosGNV.tituloCentroGNV}>Compra realizada!</Text>
         <Text style={estilosGNV.textoCentroGNV}>
           Seu look futurista já está a caminho. Obrigado por comprar na Neowear.
@@ -55,7 +62,7 @@ export default function TelaCarrinhoGNV() {
   if (itensGNV.length === 0) {
     return (
       <View style={estilosGNV.centroGNV}>
-        <Feather name="shopping-bag" size={72} color={coresGNV.textoSuaveGNV} />
+        <Feather name="shopping-bag" size={72} color={textoSuaveEscuroGNV} />
         <Text style={estilosGNV.tituloCentroGNV}>Seu carrinho está vazio</Text>
         <Text style={estilosGNV.textoCentroGNV}>
           Ainda não há nada por aqui. Escolha uma peça na Home e monte o seu
@@ -112,7 +119,7 @@ export default function TelaCarrinhoGNV() {
                 style={estilosGNV.botaoQuantidadeGNV}
                 onPress={() => alterarQuantidadeGNV(itemGNV.chaveGNV, -1)}
               >
-                <Feather name="minus" size={16} color={coresGNV.textoGNV} />
+                <Feather name="minus" size={16} color={textoEscuroGNV} />
               </TouchableOpacity>
               <Text style={estilosGNV.quantidadeGNV}>
                 {itemGNV.quantidadeGNV}
@@ -121,7 +128,7 @@ export default function TelaCarrinhoGNV() {
                 style={estilosGNV.botaoQuantidadeGNV}
                 onPress={() => alterarQuantidadeGNV(itemGNV.chaveGNV, 1)}
               >
-                <Feather name="plus" size={16} color={coresGNV.textoGNV} />
+                <Feather name="plus" size={16} color={textoEscuroGNV} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => removerGNV(itemGNV.chaveGNV)}>
                 <Feather name="trash-2" size={20} color={coresGNV.erroGNV} />
@@ -152,43 +159,43 @@ export default function TelaCarrinhoGNV() {
 const estilosGNV = StyleSheet.create({
   containerGNV: {
     flex: 1,
-    backgroundColor: coresGNV.fundoGNV,
+    backgroundColor: brancoGNV,
     paddingTop: 56,
     paddingHorizontal: 16,
   },
   centroGNV: {
     flex: 1,
-    backgroundColor: coresGNV.fundoGNV,
+    backgroundColor: brancoGNV,
     alignItems: "center",
     justifyContent: "center",
     padding: 32,
     gap: 10,
   },
   tituloCentroGNV: {
-    color: coresGNV.textoGNV,
+    color: textoEscuroGNV,
     fontSize: 24,
     fontWeight: "bold",
     marginTop: 8,
   },
   textoCentroGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: textoSuaveEscuroGNV,
     fontSize: 15,
     textAlign: "center",
     lineHeight: 22,
   },
   tituloGNV: {
-    color: coresGNV.textoGNV,
+    color: textoEscuroGNV,
     fontSize: 26,
     fontWeight: "bold",
   },
   subtituloGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: textoSuaveEscuroGNV,
     fontSize: 14,
     marginTop: 2,
     marginBottom: 16,
   },
   textoSuaveGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: textoSuaveEscuroGNV,
     fontSize: 14,
   },
   listaGNV: {
@@ -198,12 +205,17 @@ const estilosGNV = StyleSheet.create({
   itemGNV: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: coresGNV.superficieGNV,
+    backgroundColor: brancoGNV,
     borderWidth: 1,
-    borderColor: coresGNV.bordaGNV,
+    borderColor: bordaClaraGNV,
     borderRadius: 16,
     padding: 10,
     gap: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
   miniaturaGNV: {
     width: 76,
@@ -215,12 +227,12 @@ const estilosGNV = StyleSheet.create({
     gap: 2,
   },
   nomeGNV: {
-    color: coresGNV.textoGNV,
+    color: textoEscuroGNV,
     fontSize: 15,
     fontWeight: "bold",
   },
   precoGNV: {
-    color: coresGNV.primariaGNV,
+    color: azulEscuroGNV,
     fontSize: 15,
     fontWeight: "bold",
     marginTop: 4,
@@ -233,12 +245,12 @@ const estilosGNV = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 8,
-    backgroundColor: coresGNV.campoGNV,
+    backgroundColor: fundoClaroGNV,
     alignItems: "center",
     justifyContent: "center",
   },
   quantidadeGNV: {
-    color: coresGNV.textoGNV,
+    color: textoEscuroGNV,
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -252,7 +264,7 @@ const estilosGNV = StyleSheet.create({
     alignItems: "center",
   },
   totalGNV: {
-    color: coresGNV.textoGNV,
+    color: textoEscuroGNV,
     fontSize: 22,
     fontWeight: "bold",
   },
