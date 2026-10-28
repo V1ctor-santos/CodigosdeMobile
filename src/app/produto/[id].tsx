@@ -1,12 +1,3 @@
-import ImagemRemotaGNV from "@/components/ImagemRemotaGNV";
-import { coresGNV } from "@/constants/temaGNV";
-import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
-import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
-import { buscarProdutoPorIdGNV } from "@/data/servidorGNV";
-import { ProdutoGNV } from "@/models/ProdutoGNV";
-import { formatarPrecoGNV } from "@/utils/formatarPrecoGNV";
-import { Feather } from "@expo/vector-icons";
-import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -16,6 +7,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import { coresGNV } from "@/constants/temaGNV";
+import { ProdutoGNV } from "@/models/ProdutoGNV";
+import { buscarProdutoPorIdGNV } from "@/data/servidorGNV";
+import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
+import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
+import { formatarPrecoGNV } from "@/utils/formatarPrecoGNV";
+import ImagemRemotaGNV from "@/components/ImagemRemotaGNV";
 
 export default function TelaDetalhesGNV() {
   const { id: idGNV } = useLocalSearchParams<{ id: string }>();
@@ -55,7 +55,7 @@ export default function TelaDetalhesGNV() {
   if (carregandoGNV) {
     return (
       <View style={estilosGNV.centroGNV}>
-        <ActivityIndicator size="large" color={coresGNV.primariaGNV} />
+        <ActivityIndicator size="large" color={coresGNV.primariaEscuraGNV} />
       </View>
     );
   }
@@ -81,7 +81,7 @@ export default function TelaDetalhesGNV() {
       >
         <ImagemRemotaGNV
           uriGNV={produtoGNV.imagemGNV}
-          corFundoGNV={coresGNV.superficieGNV}
+          corFundoGNV={coresGNV.fundoChipClaroGNV}
           iconeGNV={produtoGNV.iconeGNV}
           estiloGNV={estilosGNV.imagemGNV}
           tamanhoIconeGNV={96}
@@ -147,7 +147,11 @@ export default function TelaDetalhesGNV() {
           <Text style={estilosGNV.rotuloGNV}>Detalhes</Text>
           {produtoGNV.detalhesGNV.map((detalheGNV) => (
             <View key={detalheGNV} style={estilosGNV.linhaDetalheGNV}>
-              <Feather name="check" size={16} color={coresGNV.primariaGNV} />
+              <Feather
+                name="check"
+                size={16}
+                color={coresGNV.primariaEscuraGNV}
+              />
               <Text style={estilosGNV.textoDetalheGNV}>{detalheGNV}</Text>
             </View>
           ))}
@@ -205,20 +209,20 @@ export default function TelaDetalhesGNV() {
 const estilosGNV = StyleSheet.create({
   containerGNV: {
     flex: 1,
-    backgroundColor: coresGNV.fundoGNV,
+    backgroundColor: coresGNV.brancoGNV,
   },
   conteudoGNV: {
     paddingBottom: 24,
   },
   centroGNV: {
     flex: 1,
-    backgroundColor: coresGNV.fundoGNV,
+    backgroundColor: coresGNV.brancoGNV,
     alignItems: "center",
     justifyContent: "center",
     gap: 12,
   },
   textoSuaveGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 16,
   },
   imagemGNV: {
@@ -271,12 +275,12 @@ const estilosGNV = StyleSheet.create({
     marginBottom: 4,
   },
   nomeGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 24,
     fontWeight: "bold",
   },
   subtituloGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 14,
     marginTop: 4,
   },
@@ -286,33 +290,33 @@ const estilosGNV = StyleSheet.create({
     gap: 4,
   },
   valorNotaGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 18,
     fontWeight: "bold",
   },
   totalNotasGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 13,
   },
   divisorGNV: {
     height: 1,
-    backgroundColor: coresGNV.bordaGNV,
+    backgroundColor: coresGNV.bordaClaraGNV,
     marginVertical: 18,
   },
   rotuloGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 8,
     marginBottom: 8,
   },
   descricaoGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 15,
     lineHeight: 22,
   },
   linkGNV: {
-    color: coresGNV.primariaGNV,
+    color: coresGNV.primariaEscuraGNV,
     fontSize: 15,
     fontWeight: "bold",
     marginTop: 6,
@@ -326,7 +330,7 @@ const estilosGNV = StyleSheet.create({
   },
   textoDetalheGNV: {
     flex: 1,
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 14,
   },
   tamanhosGNV: {
@@ -340,16 +344,16 @@ const estilosGNV = StyleSheet.create({
     paddingHorizontal: 14,
     borderRadius: 14,
     alignItems: "center",
-    backgroundColor: coresGNV.superficieGNV,
+    backgroundColor: coresGNV.fundoChipClaroGNV,
     borderWidth: 1,
-    borderColor: coresGNV.bordaGNV,
+    borderColor: coresGNV.bordaClaraGNV,
   },
   tamanhoAtivoGNV: {
     backgroundColor: coresGNV.primariaGNV,
     borderColor: coresGNV.primariaGNV,
   },
   textoTamanhoGNV: {
-    color: coresGNV.textoGNV,
+    color: coresGNV.textoEscuroGNV,
     fontSize: 16,
   },
   textoTamanhoAtivoGNV: {
@@ -365,18 +369,18 @@ const estilosGNV = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 20,
-    backgroundColor: coresGNV.superficieGNV,
+    backgroundColor: coresGNV.brancoGNV,
     borderTopWidth: 1,
-    borderTopColor: coresGNV.bordaGNV,
+    borderTopColor: coresGNV.bordaClaraGNV,
     paddingHorizontal: 20,
     paddingVertical: 14,
   },
   rotuloPrecoGNV: {
-    color: coresGNV.textoSuaveGNV,
+    color: coresGNV.textoSuaveEscuroGNV,
     fontSize: 13,
   },
   precoGNV: {
-    color: coresGNV.primariaGNV,
+    color: coresGNV.primariaEscuraGNV,
     fontSize: 22,
     fontWeight: "bold",
   },
