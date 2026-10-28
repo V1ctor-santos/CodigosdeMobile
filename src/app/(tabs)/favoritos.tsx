@@ -1,3 +1,11 @@
+import CartaoProdutoGNV from "@/components/CartaoProdutoGNV";
+import { coresGNV } from "@/constants/temaGNV";
+import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
+import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
+import { buscarProdutosGNV } from "@/data/servidorGNV";
+import { ProdutoGNV } from "@/models/ProdutoGNV";
+import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   FlatList,
@@ -6,14 +14,6 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
-import { coresGNV } from "@/constants/temaGNV";
-import { ProdutoGNV } from "@/models/ProdutoGNV";
-import { buscarProdutosGNV } from "@/data/servidorGNV";
-import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
-import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
-import CartaoProdutoGNV from "@/components/CartaoProdutoGNV";
 
 export default function TelaFavoritosGNV() {
   const routerGNV = useRouter();

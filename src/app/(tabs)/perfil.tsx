@@ -1,11 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
+import AvatarGNV from "@/components/AvatarGNV";
+import { emailPerfilGNV, nomePerfilGNV } from "@/constants/avatarGNV";
 import { coresGNV } from "@/constants/temaGNV";
-import { nomePerfilGNV, emailPerfilGNV } from "@/constants/avatarGNV";
 import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
 import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
-import AvatarGNV from "@/components/AvatarGNV";
+import { Feather } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function TelaPerfilGNV() {
   const routerGNV = useRouter();

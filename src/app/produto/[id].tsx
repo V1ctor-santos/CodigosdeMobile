@@ -1,3 +1,12 @@
+import ImagemRemotaGNV from "@/components/ImagemRemotaGNV";
+import { coresGNV } from "@/constants/temaGNV";
+import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
+import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
+import { buscarProdutoPorIdGNV } from "@/data/servidorGNV";
+import { ProdutoGNV } from "@/models/ProdutoGNV";
+import { formatarPrecoGNV } from "@/utils/formatarPrecoGNV";
+import { Feather } from "@expo/vector-icons";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -7,15 +16,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { Feather } from "@expo/vector-icons";
-import { coresGNV } from "@/constants/temaGNV";
-import { ProdutoGNV } from "@/models/ProdutoGNV";
-import { buscarProdutoPorIdGNV } from "@/data/servidorGNV";
-import { useCarrinhoGNV } from "@/contexts/CarrinhoContextoGNV";
-import { useFavoritosGNV } from "@/contexts/FavoritosContextoGNV";
-import { formatarPrecoGNV } from "@/utils/formatarPrecoGNV";
-import ImagemRemotaGNV from "@/components/ImagemRemotaGNV";
 
 export default function TelaDetalhesGNV() {
   const { id: idGNV } = useLocalSearchParams<{ id: string }>();
